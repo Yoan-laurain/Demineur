@@ -1,0 +1,123 @@
+@charset "ISO-8859-1";
+.main
+{
+    background-color: #CCC;
+}
+
+#jeu table
+{
+    border-collapse: collapse;
+    width : max-content;
+    height : 80vh;
+}
+
+#jeu td
+{
+    border : 1px solid black;
+    text-align : center;
+}
+
+#jeu
+{
+    display: flex;
+    flex-direction: row;
+	width:max-content;
+	margin:auto;
+}
+
+select
+{
+	background-color:#bf406b;
+	margin-left:20px;
+	width:10em;
+	height:2em;
+	color:#fff;
+	font-weight:700;
+	border-color:transparent;
+	cursor:pointer;
+	border-radius:10px;
+	box-shadow:0 7px 0 #6c243e;
+	outline:0;
+	font-size:1vw;
+    text-align: center;
+}
+select:active
+{
+	box-shadow:none
+}
+select:hover
+{
+	background-color:#dd4f7f
+}
+
+option
+{
+	background-color:#bf406b;
+}
+
+#ContentTop
+{
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 2vw;
+    padding-top:2vw;
+    background-color: rgb(74,117,44);
+    width:52vw;
+    margin: auto;
+}
+
+#Flag
+{
+    display: flex;
+    flex-direction: row;
+    margin-left:5vw;
+}
+
+#nbBombes
+{
+    margin-left:1vw;
+    font-size:3vw;
+    font-weight: bold;
+    color:white;
+    height:3vw;
+    width:3vw;
+}
+div#Flag.Flag img
+{
+    width:2vw;
+    height: 2vw;
+    background-color: rgb(255,255,255);
+}
+
+#Timer
+{
+    font-size:2vw;
+    font-weight: bold;
+    margin: auto;
+    margin-left:1vw;
+    color:white;
+}
+
+#ImageTimer
+{
+    margin-left:5vw;
+    background-image: url("../images/Timer.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 3vw;
+    height: 3vw;
+}
+
+#ImageFlag
+{
+    margin-left:5vw;
+    background-image: url("../images/drapeaux.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 3vw;
+    height: 3vw;
+}
+
+
