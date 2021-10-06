@@ -1,2 +1,1 @@
-# AlternaDom
- Site internet stage
+Jeu du démineur en JavaScript
