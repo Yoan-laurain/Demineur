@@ -25,11 +25,11 @@ function init()
 {
     if ( matriceJeu != [] ? matriceJeu = creerMatrice() : null);
 
-    ImageLoader();
     placeBombe();
     CreateTab();
 
     var SelectLvl = document.getElementById("Option");
+    var labelBombes = document.getElementById("nbBombes");
 
     SelectLvl.onchange = function(){
 
@@ -74,7 +74,6 @@ function init()
 function CreateTab()
 {
     let parent = document.getElementById("jeu");
-    var labelBombes = document.getElementById("nbBombes");
 
     try{
         let child = document.getElementById("table");
@@ -100,11 +99,11 @@ function CreateTab()
             tuileDom.name = tuile.i.toString() + tuile.j.toString();
             tuile.dom = tuileDom;
 
-            if(tuile.isBombe)
-            {
-                myContent = document.createTextNode("*");
-                tuileDom.appendChild(myContent);
-            }
+            // if(tuile.isBombe)
+            // {
+            //     myContent = document.createTextNode("*");
+            //     tuileDom.appendChild(myContent);
+            // }
 
             if( j % 2 == 0 ? tuileDom.style.backgroundColor = "rgb(170,215,81)" : tuileDom.style.backgroundColor = "rgb(162,209,73)" )
 
@@ -159,111 +158,118 @@ function CreateTab()
         element.onclick = function ()
         {
             count4++;
+
             Macell = foundCell(element.name);
-            Macell.decouvert = true;
-            matriceJeu[Macell.i][Macell.j] = Macell;
-
-            if( Macell.i % 2 == 0 && Macell.j % 2 == 0 || Macell.i % 2 != 0 && Macell.j % 2 != 0 ? 
-                element.style.backgroundColor = "rgb(229,194,159)" : element.style.backgroundColor = "rgb(215,184,153)")
-
-            if( !Macell.isBombe ? element.style.backgroundColor = "yellow" : element.style.backgroundColor = "red")
-
-            var nbBombes = countBombesAround(Macell.i,Macell.j);
-
-            if( nbBombes == 0 )
-            {  
-                try{
-                    if( !matriceJeu[Macell.i-1][Macell.j-1].decouvert )
-                    {
-                        if( FoundInArray( tabCellAdjacente, matriceJeu[Macell.i-1][Macell.j-1] ) )
-                        {
-                            withdrawElement( tabCellAdjacente , matriceJeu[Macell.i-1][Macell.j-1]);
-                        }
-                        tabCellAdjacente.push( matriceJeu[Macell.i-1][Macell.j-1] );
-                    }
-                }catch{}
-                try{
-                    if(!matriceJeu[Macell.i+1][Macell.j+1].decouvert)
-                    {
-                        if(FoundInArray( tabCellAdjacente, matriceJeu[Macell.i+1][Macell.j+1]))
-                        {
-                            withdrawElement( tabCellAdjacente , matriceJeu[Macell.i+1][Macell.j+1] );
-                        }
-                        tabCellAdjacente.push( matriceJeu[Macell.i+1][Macell.j+1] );
-                    }
-                }catch{}
-                try{
-                    if(!matriceJeu[Macell.i-1][Macell.j+1].decouvert)
-                    {
-                        if(FoundInArray ( tabCellAdjacente, [Macell.i-1][Macell.j+1]))
-                        {
-                            withdrawElement( tabCellAdjacente , matriceJeu[Macell.i-1][Macell.j+1]);
-                        }
-                        tabCellAdjacente.push( matriceJeu[Macell.i-1][Macell.j+1] );
-                    }
-                }catch{}
-                try{
-                    if(!matriceJeu[Macell.i+1][Macell.j-1].decouvert)
-                    {
-                        if(FoundInArray( tabCellAdjacente, matriceJeu[Macell.i+1][Macell.j-1]))
-                        {
-                            withdrawElement( tabCellAdjacente , matriceJeu[Macell.i+1][Macell.j-1]);
-                        }
-                        tabCellAdjacente.push( matriceJeu[Macell.i+1][Macell.j-1] );
-                    }
-                }catch{}
-                try{
-                    if(!matriceJeu[Macell.i-1][Macell.j].decouvert)
-                    {
-                        if(FoundInArray( tabCellAdjacente, matriceJeu[Macell.i-1][Macell.j]))
-                        {
-                            withdrawElement( tabCellAdjacente , matriceJeu[Macell.i-1][Macell.j]);
-                        }
-                        tabCellAdjacente.push( matriceJeu[Macell.i-1][Macell.j] );
-                    }
-                }catch{}
-                try{
-                    if(!matriceJeu[Macell.i+1][Macell.j].decouvert)
-                    {
-                        if(FoundInArray( tabCellAdjacente, matriceJeu[Macell.i+1][Macell.j]))
-                        {
-                            withdrawElement( tabCellAdjacente , matriceJeu[Macell.i+1][Macell.j]);
-                        }
-                        tabCellAdjacente.push( matriceJeu[Macell.i+1][Macell.j] );
-                    }
-                }catch{}
-                try{
-                    if(!matriceJeu[Macell.i][Macell.j-1].decouvert)
-                    {
-                        if(FoundInArray( tabCellAdjacente, matriceJeu[Macell.i][Macell.j-1]))
-                        {
-                            withdrawElement( tabCellAdjacente , matriceJeu[Macell.i][Macell.j-1]);
-                        }
-                        tabCellAdjacente.push( matriceJeu[Macell.i][Macell.j-1] );
-                    }
-                }
-                catch{}
-                try{
-                    if(!matriceJeu[Macell.i][Macell.j+1].decouvert)
-                    {
-                        if(FoundInArray( tabCellAdjacente, matriceJeu[Macell.i][Macell.j+1]))
-                        {
-                            withdrawElement( tabCellAdjacente , matriceJeu[Macell.i][Macell.j+1]);
-                        }
-                        tabCellAdjacente.push( matriceJeu[Macell.i][Macell.j+1]) ;
-                    }
-                }catch{}
-
-                decouvre();            
-            }
-            else
+            if(Macell.isBombe)
             {
-                if(element.firstChild == null)
-                {
-                    myContent = document.createTextNode(nbBombes);
-                    element.appendChild(myContent);
+                EndGame();
+            }
+            else{
+                Macell.decouvert = true;
+                matriceJeu[Macell.i][Macell.j] = Macell;
+
+                if( Macell.i % 2 == 0 && Macell.j % 2 == 0 || Macell.i % 2 != 0 && Macell.j % 2 != 0 ? 
+                    element.style.backgroundColor = "rgb(229,194,159)" : element.style.backgroundColor = "rgb(215,184,153)")
+
+                //if( !Macell.isBombe ? element.style.backgroundColor = "yellow" : element.style.backgroundColor = "red")
+
+                var nbBombes = countBombesAround(Macell.i,Macell.j);
+
+                if( nbBombes == 0 )
+                {  
+                    try{
+                        if( !matriceJeu[Macell.i-1][Macell.j-1].decouvert )
+                        {
+                            if( FoundInArray( tabCellAdjacente, matriceJeu[Macell.i-1][Macell.j-1] ) )
+                            {
+                                withdrawElement( tabCellAdjacente , matriceJeu[Macell.i-1][Macell.j-1]);
+                            }
+                            tabCellAdjacente.push( matriceJeu[Macell.i-1][Macell.j-1] );
+                        }
+                    }catch{}
+                    try{
+                        if(!matriceJeu[Macell.i+1][Macell.j+1].decouvert)
+                        {
+                            if(FoundInArray( tabCellAdjacente, matriceJeu[Macell.i+1][Macell.j+1]))
+                            {
+                                withdrawElement( tabCellAdjacente , matriceJeu[Macell.i+1][Macell.j+1] );
+                            }
+                            tabCellAdjacente.push( matriceJeu[Macell.i+1][Macell.j+1] );
+                        }
+                    }catch{}
+                    try{
+                        if(!matriceJeu[Macell.i-1][Macell.j+1].decouvert)
+                        {
+                            if(FoundInArray ( tabCellAdjacente, [Macell.i-1][Macell.j+1]))
+                            {
+                                withdrawElement( tabCellAdjacente , matriceJeu[Macell.i-1][Macell.j+1]);
+                            }
+                            tabCellAdjacente.push( matriceJeu[Macell.i-1][Macell.j+1] );
+                        }
+                    }catch{}
+                    try{
+                        if(!matriceJeu[Macell.i+1][Macell.j-1].decouvert)
+                        {
+                            if(FoundInArray( tabCellAdjacente, matriceJeu[Macell.i+1][Macell.j-1]))
+                            {
+                                withdrawElement( tabCellAdjacente , matriceJeu[Macell.i+1][Macell.j-1]);
+                            }
+                            tabCellAdjacente.push( matriceJeu[Macell.i+1][Macell.j-1] );
+                        }
+                    }catch{}
+                    try{
+                        if(!matriceJeu[Macell.i-1][Macell.j].decouvert)
+                        {
+                            if(FoundInArray( tabCellAdjacente, matriceJeu[Macell.i-1][Macell.j]))
+                            {
+                                withdrawElement( tabCellAdjacente , matriceJeu[Macell.i-1][Macell.j]);
+                            }
+                            tabCellAdjacente.push( matriceJeu[Macell.i-1][Macell.j] );
+                        }
+                    }catch{}
+                    try{
+                        if(!matriceJeu[Macell.i+1][Macell.j].decouvert)
+                        {
+                            if(FoundInArray( tabCellAdjacente, matriceJeu[Macell.i+1][Macell.j]))
+                            {
+                                withdrawElement( tabCellAdjacente , matriceJeu[Macell.i+1][Macell.j]);
+                            }
+                            tabCellAdjacente.push( matriceJeu[Macell.i+1][Macell.j] );
+                        }
+                    }catch{}
+                    try{
+                        if(!matriceJeu[Macell.i][Macell.j-1].decouvert)
+                        {
+                            if(FoundInArray( tabCellAdjacente, matriceJeu[Macell.i][Macell.j-1]))
+                            {
+                                withdrawElement( tabCellAdjacente , matriceJeu[Macell.i][Macell.j-1]);
+                            }
+                            tabCellAdjacente.push( matriceJeu[Macell.i][Macell.j-1] );
+                        }
+                    }
+                    catch{}
+                    try{
+                        if(!matriceJeu[Macell.i][Macell.j+1].decouvert)
+                        {
+                            if(FoundInArray( tabCellAdjacente, matriceJeu[Macell.i][Macell.j+1]))
+                            {
+                                withdrawElement( tabCellAdjacente , matriceJeu[Macell.i][Macell.j+1]);
+                            }
+                            tabCellAdjacente.push( matriceJeu[Macell.i][Macell.j+1]) ;
+                        }
+                    }catch{}
+
+                    decouvre();            
                 }
-                decouvre();
+                else
+                {
+                    if(element.firstChild == null)
+                    {
+                        myContent = document.createTextNode(nbBombes);
+                        element.appendChild(myContent);
+                    }
+                    decouvre();
+                }
             }
         }
     });
@@ -455,6 +461,21 @@ function withdrawElement(tab,elementToWithdraw)
     })
 }
 
+function EndGame()
+{
+    for( let i = 0; i < lignesMatrice; i++ )
+    {
+        for( let j = 0; j < lignesMatrice; j++ )
+        {
+            if( matriceJeu[i][j].isBombe )
+            {
+                if(j % 2 == 0 ? couleur = " background-color : rgb(170,215,81)" : couleur = " background-color : rgb(162,209,73)" );
+                matriceJeu[i][j].dom.style = "background-image: url('images/bombe.png'); background-size: auto;background-repeat: no-repeat;background-position: center center;"+couleur;
+            }
+        }
+    }
+}
+
 /**
  * PART FOR THE TIMER
  */
@@ -503,27 +524,4 @@ function reset() {
 
 //////////////////////////////////////////** */
 
-function ImageLoader(sources, callback)
-{
-    var images = {};
-    var loadedImages = 0;
-    var numImages = 0;
- 
-    for (var src in sources)
-    {
-        numImages++;
-    }
-    for (var src in sources) 
-    {
-        images[src] = new Image();
-        images[src].onload = function()
-        {
-            if (++loadedImages >= numImages) 
-            {
-                callback(images);
-            }
-        };
-        images[src].src = sources[src];
-    }
-}
 
