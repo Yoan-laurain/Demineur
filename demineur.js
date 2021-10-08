@@ -1,6 +1,6 @@
 var lignesMatrice = 10;
 var matriceJeu = [];
-var nbBombesjeu = 5;
+var nbBombesjeu = 20;
 var tabCellAdjacente = [];
 var tabCellClicked = [];
 var tailleCell = 5;
@@ -14,6 +14,8 @@ var millisecond = 0;
 var count=0;
 var count4=0;
 
+var Image
+
 /**
  * Init function taht call all method
  * @return { void }
@@ -23,11 +25,11 @@ function init()
 {
     if ( matriceJeu != [] ? matriceJeu = creerMatrice() : null);
 
+    ImageLoader();
     placeBombe();
     CreateTab();
 
     var SelectLvl = document.getElementById("Option");
-    var labelBombes = document.getElementById("nbBombes");
 
     SelectLvl.onchange = function(){
 
@@ -41,7 +43,7 @@ function init()
             tailleCell = 5;
         }
         else if(SelectLvl.value == "Moyen"){
-            nbBombesjeu = 5;
+            nbBombesjeu = 35;
             lignesMatrice = 15;
             tailleCell = 3.25;
         }
@@ -61,15 +63,8 @@ function init()
         start();
         Begin=true;
     }
-    var test = document.getElementById("test");
-    test.onclick = function(){
-        alert(" Total  : " + count4 + " Clicks effectués : " +count );
-        tabCellClicked.sort();
-        alert(tabCellClicked.length);
-        alert(tabCellClicked);
 }
 
-}
 
 /**
  * Main function that manage UI and recusivity for the cases
@@ -79,6 +74,7 @@ function init()
 function CreateTab()
 {
     let parent = document.getElementById("jeu");
+    var labelBombes = document.getElementById("nbBombes");
 
     try{
         let child = document.getElementById("table");
@@ -121,6 +117,42 @@ function CreateTab()
     var Macell;
 
     Macellule.forEach(element => {
+
+        element.addEventListener('contextmenu', function(ev) {
+            ev.preventDefault();
+
+            var labelBombes = document.getElementById("nbBombes");
+
+            var couleur ="";
+            if( element.i % 2 == 0 ? couleur = " background-color : rgb(170,215,81)" : couleur = " background-color : rgb(162,209,73)" );
+
+            if(nbBombesjeu>0)
+            {
+                if ( element.marque ? element.marque = false : element.marque = true );
+
+                if ( element.marque )
+                {
+                    nbBombesjeu-- ; 
+                    element.style = "background-image: url('images/drapeaux.png'); background-size: auto;background-repeat: no-repeat;background-position: center center;"+couleur;
+                }
+                else
+                {
+                    nbBombesjeu++;
+                    element.style = couleur;
+                }
+            }
+            else{
+                if (element.marque)
+                {
+                    nbBombesjeu++;
+                    element.style = couleur;
+                    element.marque = false;
+                }
+            }
+           
+            labelBombes.innerHTML = nbBombesjeu;
+            return false;
+        }, false);
 
         element.onclick = function ()
         {
@@ -466,3 +498,30 @@ function reset() {
     document.getElementById('minute').innerText = '00';
     document.getElementById('second').innerText = '00';
 }
+
+//////////////////////////////////////////** */
+
+function ImageLoader(sources, callback)
+{
+    var images = {};
+    var loadedImages = 0;
+    var numImages = 0;
+ 
+    for (var src in sources)
+    {
+        numImages++;
+    }
+    for (var src in sources) 
+    {
+        images[src] = new Image();
+        images[src].onload = function()
+        {
+            if (++loadedImages >= numImages) 
+            {
+                callback(images);
+            }
+        };
+        images[src].src = sources[src];
+    }
+}
+

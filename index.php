@@ -26,14 +26,10 @@ session_start();
                 <div id="Timer">
                     <span id="minute">00</span>:<span id="second">00</span>
                 </div>
-                <input type="submit" name="test" id="test" value="LET'S GO">
-
             </div>
         </head>
         <body onload="init()">
             <div id = "jeu">
-                <!-- <canvas width="150" height="150" id="canvas"></canvas>
-                <p id="timer"></p> -->
             </div>    
         </body>
     </html>
