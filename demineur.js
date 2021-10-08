@@ -121,10 +121,12 @@ function CreateTab()
         element.addEventListener('contextmenu', function(ev) {
             ev.preventDefault();
 
+            var MaCell = foundCell(element.name);
             var labelBombes = document.getElementById("nbBombes");
 
             var couleur ="";
-            if( element.i % 2 == 0 ? couleur = " background-color : rgb(170,215,81)" : couleur = " background-color : rgb(162,209,73)" );
+
+            if( MaCell.j % 2 == 0 ? couleur = " background-color : rgb(170,215,81)" : couleur = " background-color : rgb(162,209,73)" );
 
             if(nbBombesjeu>0)
             {
