@@ -264,7 +264,11 @@ function CreateTab()
                 {
                     if(element.firstChild == null)
                     {
+                        let couleurTexte = ColorTextBombs(nbBombes);
                         myContent = document.createTextNode(nbBombes);
+                        element.style.color = couleurTexte;
+                        element.style.fontWeight = 'bold';
+                        element.style.fontSize = "1.3vw";
                         element.appendChild(myContent);
                     }
                     decouvre();
@@ -479,6 +483,20 @@ function EndGame()
     OverlayEnd();
 }
 
+function ColorTextBombs(number)
+{
+    let color;
+
+    if(number == 1 ?  color = "blue" : null );
+    if(number == 2 ?  color = "green" : null );
+    if(number == 3 ?  color = "red" : null );
+    if(number == 4 ?  color = "purple" : null );
+    if(number == 5 ?  color = "orange" : null );
+    if(number == 6 ?  color = "gold" : null );
+
+    return color;
+}
+
 /**
  * PART FOR THE TIMER
  */
@@ -525,7 +543,9 @@ function reset() {
     document.getElementById('second').innerText = '00';
 }
 
-//////////////////////////////////////////** */
+/**
+ * PART FOR THE End game Overlay
+ */
 
 function OverlayEnd()
 {
