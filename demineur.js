@@ -11,11 +11,6 @@ var minute = 0;
 var second = 0;
 var millisecond = 0;
 
-var count=0;
-var count4=0;
-
-var Image
-
 /**
  * Init function taht call all method
  * @return { void }
@@ -30,6 +25,16 @@ function init()
 
     var SelectLvl = document.getElementById("Option");
     var labelBombes = document.getElementById("nbBombes");
+
+    try{
+        if( sessionStorage.getItem('clé') != null)
+        {
+            nbBombesjeu = sessionStorage.getItem('clé');
+            labelBombes.innerHTML = nbBombesjeu;
+        }
+    }catch{}
+
+    sessionStorage.setItem('clé',nbBombesjeu);
 
     SelectLvl.onchange = function(){
 
@@ -55,6 +60,7 @@ function init()
 
         labelBombes.innerHTML = nbBombesjeu;
         matriceJeu = [];
+        sessionStorage.setItem('clé',nbBombesjeu);
         init();
     };
 
@@ -64,7 +70,6 @@ function init()
         Begin=true;
     }
 }
-
 
 /**
  * Main function that manage UI and recusivity for the cases
@@ -99,12 +104,6 @@ function CreateTab()
             tuileDom.name = tuile.i.toString() + tuile.j.toString();
             tuile.dom = tuileDom;
 
-            // if(tuile.isBombe)
-            // {
-            //     myContent = document.createTextNode("*");
-            //     tuileDom.appendChild(myContent);
-            // }
-
             if( j % 2 == 0 ? tuileDom.style.backgroundColor = "rgb(170,215,81)" : tuileDom.style.backgroundColor = "rgb(162,209,73)" )
 
             myRow.appendChild(tuile.dom);
@@ -127,37 +126,39 @@ function CreateTab()
 
             if( MaCell.j % 2 == 0 ? couleur = " background-color : rgb(170,215,81)" : couleur = " background-color : rgb(162,209,73)" );
 
-            if(nbBombesjeu>0)
+            if(!MaCell.decouvert)
             {
-                if ( element.marque ? element.marque = false : element.marque = true );
-
-                if ( element.marque )
+                if(nbBombesjeu>0)
                 {
-                    nbBombesjeu-- ; 
-                    element.style = "background-image: url('images/drapeaux.png'); background-size: auto;background-repeat: no-repeat;background-position: center center;"+couleur;
+                    if ( element.marque ? element.marque = false : element.marque = true );
+    
+                    if ( element.marque )
+                    {
+                        nbBombesjeu-- ; 
+                        element.style = "background-image: url('images/drapeaux.png'); background-size: auto;background-repeat: no-repeat;background-position: center center;"+couleur;
+                    }
+                    else
+                    {
+                        nbBombesjeu++;
+                        element.style = couleur;
+                    }
                 }
-                else
-                {
-                    nbBombesjeu++;
-                    element.style = couleur;
+                else{
+                    if (element.marque)
+                    {
+                        nbBombesjeu++;
+                        element.style = couleur;
+                        element.marque = false;
+                    }
                 }
+               
+                labelBombes.innerHTML = nbBombesjeu;
+                return false;
             }
-            else{
-                if (element.marque)
-                {
-                    nbBombesjeu++;
-                    element.style = couleur;
-                    element.marque = false;
-                }
-            }
-           
-            labelBombes.innerHTML = nbBombesjeu;
-            return false;
         }, false);
 
         element.onclick = function ()
         {
-            count4++;
 
             Macell = foundCell(element.name);
             if(Macell.isBombe)
@@ -170,8 +171,6 @@ function CreateTab()
 
                 if( Macell.i % 2 == 0 && Macell.j % 2 == 0 || Macell.i % 2 != 0 && Macell.j % 2 != 0 ? 
                     element.style.backgroundColor = "rgb(229,194,159)" : element.style.backgroundColor = "rgb(215,184,153)")
-
-                //if( !Macell.isBombe ? element.style.backgroundColor = "yellow" : element.style.backgroundColor = "red")
 
                 var nbBombes = countBombesAround(Macell.i,Macell.j);
 
@@ -286,13 +285,13 @@ function tuile(id,i,j)
 {
     let T = tailleCell;
     this.id = id;
-    this.i=i; // ligne dans la grille
-    this.j=j; //colonne
-    this.y=T; // position en Pixel ( T est la hauteur et la largeur de la tuile )
-    this.x=T; // idem 
-    this.marque=false; // marquer d'un drapeux ?
-    this.decouvert=false; // déja découverte ?
-    this.im=null; // l'image à afficcher dans le canvas
+    this.i=i; 
+    this.j=j; 
+    this.y=T; 
+    this.x=T; 
+    this.marque=false; 
+    this.decouvert=false; 
+    this.im=null; 
     this.isBombe=false;
     this.dom = null;
 }
@@ -439,7 +438,6 @@ function decouvre()
                         })
                         tabCellClicked.push(UneCell.id);
                         UneCell.dom.click(); 
-                        count++;
                     }
                 }
             }
@@ -570,7 +568,3 @@ function OverlayEnd()
             init();
         }
 }
-
-
-
-

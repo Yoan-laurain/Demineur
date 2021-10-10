@@ -1,26 +1,27 @@
 @charset "ISO-8859-1";
 .main
 {
-    background-color: #CCC;
+  background-color: #CCC;
 }
 
 #jeu table
 {
-    border-collapse: collapse;
-    width : max-content;
-    height : 80vh;
+  border-collapse: collapse;
+  width : max-content;
+  height : 80vh;
+  width:50vw;
 }
 
 #jeu td
 {
-    border : 1px solid black;
-    text-align : center;
+  border : 1px solid black;
+  text-align : center;
 }
 
 #jeu
 {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 	width:max-content;
 	margin:auto;
 }
@@ -38,8 +39,8 @@ select#Option
 	box-shadow:0 7px 0 #CCC;
 	outline:0;
 	font-size:1vw;
-    text-align: center;
-    margin-top:0.5vw;
+  text-align: center;
+  margin-top:0.5vw;
 }
 select#Option:active
 {
@@ -52,73 +53,74 @@ select#Option:hover
 
 option
 {
-	background-color:white;
-    border-radius:20px;
+  background-color:white;
+  border-radius:20px;
 }
 
 #ContentTop
 {
-    display: flex;
-    flex-direction: row;
-    padding-bottom: 2vw;
-    padding-top:2vw;
-    background-color: rgb(74,117,44);
-    width:52vw;
-    margin: auto;
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 2vw;
+  padding-top:2vw;
+  background-color: rgb(74,117,44);
+  width:51vw;
+  margin: auto;
+  border-radius:10px;
 }
 
 #Flag
 {
-    display: flex;
-    flex-direction: row;
-    margin-left:7vw;
+  display: flex;
+  flex-direction: row;
+  margin-left:7vw;
 }
 
 #nbBombes
 {
-    margin-left:1vw;
-    font-size:3vw;
-    font-weight: bold;
-    color:white;
-    height:3vw;
-    width:3vw;
+  margin-left:1vw;
+  font-size:3vw;
+  font-weight: bold;
+  color:white;
+  height:3vw;
+  width:3vw;
 }
 div#Flag.Flag img
 {
-    width:2vw;
-    height: 2vw;
-    background-color: rgb(255,255,255);
+  width:2vw;
+  height: 2vw;
+  background-color: rgb(255,255,255);
 }
 
 #Timer
 {
-    font-size:2vw;
-    font-weight: bold;
-    margin: auto;
-    margin-left:1vw;
-    color:white;
+  font-size:2vw;
+  font-weight: bold;
+  margin: auto;
+  margin-left:1vw;
+  color:white;
 }
 
 #ImageTimer
 {
-    margin-left:11vw;
-    background-image: url("../images/Timer.png");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    width: 3vw;
-    height: 3vw;
+  margin-left:11vw;
+  background-image: url("../images/Timer.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 3vw;
+  height: 3vw;
 }
 
 #ImageFlag
 {
-    margin-left:5vw;
-    background-image: url("../images/drapeaux.png");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    width: 3vw;
-    height: 3vw;
+  margin-left:5vw;
+  background-image: url("../images/drapeaux.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 3vw;
+  height: 3vw;
 }
 
 /*********************************************************************************/
