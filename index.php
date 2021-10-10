@@ -31,5 +31,28 @@ session_start();
         <body onload="init()">
             <div id = "jeu">
             </div>    
+            <div id = "End">
+                <button id="buttonEnd" data-modal-target="#modal">Open Modal</button>
+            </div>    
+            <div class="modal" id="modal">
+                <div class="modal-Content">
+                    <div class="modal-Top">
+                        <div class="modal-Top1">
+                            <img class="TimerImageEnd" src="images\Timer.png" data-atf="0" data-frt="0">
+
+                        </div>
+                        <div class="modal-Top2">
+                            <img class="TropheesImageEnd" src="images\trophy.png" data-atf="0" data-frt="0">
+                   
+                        </div>
+
+
+                    </div>
+                    <div class="modal-Bottom">
+                        <button data-close-button class="close-button">Retry</button>
+                    </div>
+                </div>
+            </div>
+            <div id="overlay"></div>
         </body>
     </html>

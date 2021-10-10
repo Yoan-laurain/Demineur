@@ -463,6 +463,8 @@ function withdrawElement(tab,elementToWithdraw)
 
 function EndGame()
 {
+    var delayInMilliseconds = 1000; //1 second
+
     for( let i = 0; i < lignesMatrice; i++ )
     {
         for( let j = 0; j < lignesMatrice; j++ )
@@ -470,10 +472,13 @@ function EndGame()
             if( matriceJeu[i][j].isBombe )
             {
                 if(j % 2 == 0 ? couleur = " background-color : rgb(170,215,81)" : couleur = " background-color : rgb(162,209,73)" );
+                
                 matriceJeu[i][j].dom.style = "background-image: url('images/bombe.png'); background-size: auto;background-repeat: no-repeat;background-position: center center;"+couleur;
+                
             }
         }
     }
+    OverlayEnd();
 }
 
 /**
@@ -523,5 +528,49 @@ function reset() {
 }
 
 //////////////////////////////////////////** */
+
+function OverlayEnd()
+{
+    const button = document.getElementById('buttonEnd')
+    const closeModalButtons = document.querySelectorAll('[data-close-button]')
+    const overlay = document.getElementById('overlay')
+
+    button.addEventListener('click', () => {
+        const modal = document.querySelector(button.dataset.modalTarget)
+        openModal(modal)
+    })
+
+    button.click();
+
+    overlay.addEventListener('click', () => {
+        const modals = document.querySelectorAll('.modal.active')
+        modals.forEach(modal => {
+        closeModal(modal)
+        })
+    })
+
+    closeModalButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const modal = button.closest('.modal')
+            closeModal(modal)
+        })
+    })
+
+    function openModal(modal) {
+        if (modal == null) return
+        modal.classList.add('active')
+        overlay.classList.add('active')
+    }
+
+    function closeModal(modal) {
+        if (modal == null) return
+            modal.classList.remove('active')
+            overlay.classList.remove('active')
+            reset()
+            init();
+        }
+}
+
+
 
 

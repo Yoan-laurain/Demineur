@@ -27,19 +27,19 @@
 
 select#Option
 {
-	background-color:#bf406b;
+	background-color:white;
 	margin-left:20px;
 	width:10em;
 	height:2em;
-	color:#fff;
 	font-weight:700;
 	border-color:transparent;
 	cursor:pointer;
 	border-radius:10px;
-	box-shadow:0 7px 0 #6c243e;
+	box-shadow:0 7px 0 #CCC;
 	outline:0;
 	font-size:1vw;
     text-align: center;
+    margin-top:0.5vw;
 }
 select#Option:active
 {
@@ -47,12 +47,13 @@ select#Option:active
 }
 select#Option:hover
 {
-	background-color:#dd4f7f
+	background-color:#ccc
 }
 
 option
 {
-	background-color:#bf406b;
+	background-color:white;
+    border-radius:20px;
 }
 
 #ContentTop
@@ -70,7 +71,7 @@ option
 {
     display: flex;
     flex-direction: row;
-    margin-left:5vw;
+    margin-left:7vw;
 }
 
 #nbBombes
@@ -100,7 +101,7 @@ div#Flag.Flag img
 
 #ImageTimer
 {
-    margin-left:5vw;
+    margin-left:11vw;
     background-image: url("../images/Timer.png");
     background-size: cover;
     background-repeat: no-repeat;
@@ -120,4 +121,105 @@ div#Flag.Flag img
     height: 3vw;
 }
 
+/*********************************************************************************/
+*, *::after, *::before {
+  box-sizing: border-box;
+}
 
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: 200ms ease-in-out;
+  border-radius: 10px;
+  z-index: 10;
+  width: 500px;
+}
+
+.modal.active {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-Content {
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-Top
+{
+  background-image: url("../images/lose_screen.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  width: 15vw;
+  height: 20vh;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+}
+
+.modal-Top1
+{
+  margin-left:3vw;
+  margin-right:2vw;
+  margin-top:1vw;
+}
+.modal-Top2
+{
+  margin-top:1vw;
+}
+
+.modal-Top2 img
+{
+  height: 64px;
+  width:64px;
+}
+
+.modal-Content .close-button {
+  background: #4a752c;
+  width: 15vw;
+  height: 8vh;
+  margin-top: 1vw;
+  border-radius: 8px;
+  border: none;
+  color: #fff;
+  font-size: 1vw;
+  text-align: center;
+  user-select: none;
+  cursor: pointer;
+  background-image: url("../images/retry.png");
+  background-repeat: no-repeat;
+  background-position-x:4vw;
+  background-position-y: center;
+}
+
+.modal-body {
+  padding: 10px 15px;
+}
+
+#overlay {
+  position: fixed;
+  opacity: 0;
+  transition: 200ms ease-in-out;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, .5);
+  pointer-events: none;
+}
+
+#overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+#End
+{
+  display: none;
+}
