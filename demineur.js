@@ -10,6 +10,7 @@ var cron;
 var minute = 0;
 var second = 0;
 var millisecond = 0;
+var firstShot = true;
 
 /**
  * Init function taht call all method
@@ -18,6 +19,7 @@ var millisecond = 0;
 
 function init()
 {
+    firstShot = true;
     var SelectLvl = document.getElementById("Option");
     var labelBombes = document.getElementById("nbBombes");
 
@@ -27,6 +29,10 @@ function init()
         labelBombes.innerHTML = nbBombesjeu;
         SelectLvl.selectedIndex = (nbBombesjeu == 20 ? 0 : nbBombesjeu == 35 ? 1 : nbBombesjeu == 45 ? 2 : 0);
         setGameParameters(SelectLvl.selectedIndex);
+    }
+    else
+    {
+        sessionStorage.setItem('clé',nbBombesjeu);
     }
 
     if ( matriceJeu != [] ? matriceJeu = creerMatrice() : null);
@@ -42,7 +48,7 @@ function init()
 
         setGameParameters(SelectLvl.selectedIndex);
         sessionStorage.setItem('clé',nbBombesjeu);
-        
+
         init();
     };
 
@@ -84,6 +90,7 @@ function CreateTab()
             tuileDom.style.height = tuile.y + "vh";
             tuileDom.id = "Cell";
             tuileDom.name = tuile.i.toString() + tuile.j.toString();
+
             tuile.dom = tuileDom;
 
             if( j % 2 == 0 ? tuileDom.style.backgroundColor = "rgb(170,215,81)" : tuileDom.style.backgroundColor = "rgb(162,209,73)" )
@@ -110,17 +117,19 @@ function CreateTab()
 
             if(!MaCell.decouvert)
             {
-                if(nbBombesjeu>0)
+                if(nbBombesjeu > 0)
                 {
                     if ( element.marque ? element.marque = false : element.marque = true );
     
                     if ( element.marque )
                     {
+                        MaCell.marque = true;
                         nbBombesjeu-- ; 
                         element.style = "background-image: url('images/drapeaux.png'); background-size: auto;background-repeat: no-repeat;background-position: center center;"+couleur;
                     }
                     else
                     {
+                        MaCell.marque = false;
                         nbBombesjeu++;
                         element.style = couleur;
                     }
@@ -131,6 +140,7 @@ function CreateTab()
                         nbBombesjeu++;
                         element.style = couleur;
                         element.marque = false;
+                        MaCell.marque = false;
                     }
                 }
                
@@ -141,13 +151,27 @@ function CreateTab()
 
         element.onclick = function ()
         {
-
             Macell = foundCell(element.name);
+
             if(Macell.isBombe)
             {
-                EndGame();
+                if(firstShot ? antiLoose(Macell) : EndGame());
+                Macell.dom.click();
             }
             else{
+
+                firstShot = false;
+                if( Macell.j % 2 == 0 ? couleur = " background-color : rgb(170,215,81)" : couleur = " background-color : rgb(162,209,73)" );
+                if(Macell.marque)
+                {
+                    var labelBombes = document.getElementById("nbBombes");
+                    nbBombesjeu++;
+                    element.style = couleur;
+                    element.marque = false;
+                    Macell.marque = false;
+                    labelBombes.innerHTML = nbBombesjeu;
+                }
+
                 Macell.decouvert = true;
                 matriceJeu[Macell.i][Macell.j] = Macell;
 
@@ -495,6 +519,22 @@ function setGameParameters(selectedIndex)
         nbBombesjeu = 45;
         lignesMatrice = 20;
         tailleCell = 2.4;
+    }
+}
+
+function antiLoose(aCell)
+{
+    var success = false;
+    while(!success)
+    {
+        let x = Math.floor( ( Math.random() * lignesMatrice - 1 ) + 1 );
+        let y = Math.floor( ( Math.random() * lignesMatrice - 1 ) + 1 );
+        if( !matriceJeu[x][y].isBombe && ( x != aCell.i || y != aCell.j ) )
+        {
+            matriceJeu[x][y].isBombe = true;
+            matriceJeu[aCell.i][aCell.j].isBombe = false;
+            success = true;
+        }
     }
 }
 
