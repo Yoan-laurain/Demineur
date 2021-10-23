@@ -21,7 +21,6 @@ var CellToDiscover;
 
 function init()
 {
-    //OverlayEnd("You Win 🎉");
     firstShot = true;
     var SelectLvl = document.getElementById("Option");
     var labelBombes = document.getElementById("nbBombes");
@@ -285,6 +284,7 @@ function CreateTab()
 
                 if(CellToDiscover == 0)
                 {
+                    pause();
                     OverlayEnd("You Win");
                 }
             }
@@ -480,6 +480,7 @@ function withdrawElement(tab,elementToWithdraw)
 
 function EndGame()
 {
+    pause();
     var delayInMilliseconds = 1000; //1 second
 
     for( let i = 0; i < lignesMatrice; i++ )
