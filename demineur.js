@@ -12,6 +12,8 @@ var second = 0;
 var millisecond = 0;
 var firstShot = true;
 
+var CellToDiscover;
+
 /**
  * Init function taht call all method
  * @return { void }
@@ -19,6 +21,7 @@ var firstShot = true;
 
 function init()
 {
+    //OverlayEnd("You Win 🎉");
     firstShot = true;
     var SelectLvl = document.getElementById("Option");
     var labelBombes = document.getElementById("nbBombes");
@@ -279,6 +282,11 @@ function CreateTab()
                     }
                     decouvre();
                 }
+
+                if(CellToDiscover == 0)
+                {
+                    OverlayEnd("You Win");
+                }
             }
         }
     });
@@ -433,6 +441,7 @@ function FoundInArray(array,object)
 
 function decouvre()
 {
+    CellToDiscover --;
     for( let i = tabCellAdjacente.length-1; i >-1; i-- )
     {
         try{
@@ -486,7 +495,7 @@ function EndGame()
             }
         }
     }
-    OverlayEnd();
+    OverlayEnd("You Loose");
 }
 
 function ColorTextBombs(number)
@@ -509,16 +518,19 @@ function setGameParameters(selectedIndex)
         nbBombesjeu = 20;
         lignesMatrice = 10;
         tailleCell = 5;
+        CellToDiscover = 80;
     }
     else if(selectedIndex == 1){
         nbBombesjeu = 35;
         lignesMatrice = 15;
         tailleCell = 3.25;
+        CellToDiscover = 190;
     }
     else{
         nbBombesjeu = 45;
         lignesMatrice = 20;
         tailleCell = 2.4;
+        CellToDiscover = 355;
     }
 }
 
@@ -537,6 +549,7 @@ function antiLoose(aCell)
         }
     }
 }
+
 
 /**
  * PART FOR THE TIMER
@@ -588,11 +601,12 @@ function reset() {
  * PART FOR THE End game Overlay
  */
 
-function OverlayEnd()
+function OverlayEnd(text)
 {
     const button = document.getElementById('buttonEnd')
     const closeModalButtons = document.querySelectorAll('[data-close-button]')
     const overlay = document.getElementById('overlay')
+    consoleText([text], 'textEnd',(text == "You Loose" ? ['Red'] : ['blue'] ) );
 
     button.addEventListener('click', () => {
         const modal = document.querySelector(button.dataset.modalTarget)
@@ -628,4 +642,54 @@ function OverlayEnd()
             reset()
             init();
         }
+}
+
+
+function consoleText(words, id, colors) {
+    if (colors === undefined) colors = ['#fff'];
+    var visible = true;
+    var con = document.getElementById('console');
+    var letterCount = 1;
+    var x = 1;
+    var waiting = false;
+    var target = document.getElementById(id);
+    target.setAttribute('style', 'color:' + colors[0])
+    window.setInterval(function() {
+  
+      if (letterCount === 0 && waiting === false) {
+        waiting = true;
+        target.innerHTML = words[0].substring(0, letterCount)
+        window.setTimeout(function() {
+          var usedColor = colors.shift();
+          colors.push(usedColor);
+          var usedWord = words.shift();
+          words.push(usedWord);
+          x = 1;
+          target.setAttribute('style', 'color:' + colors[0])
+          letterCount += x;
+          waiting = false;
+        }, 1000)
+      } else if (letterCount === words[0].length + 1 && waiting === false) {
+        waiting = true;
+        window.setTimeout(function() {
+          x = -1;
+          letterCount += x;
+          waiting = false;
+        }, 1000)
+      } else if (waiting === false) {
+        target.innerHTML = words[0].substring(0, letterCount)
+        letterCount += x;
+      }
+    }, 120)
+    window.setInterval(function() {
+      if (visible === true) {
+        con.className = 'console-underscore hidden'
+        visible = false;
+  
+      } else {
+        con.className = 'console-underscore'
+  
+        visible = true;
+      }
+    }, 400)
 }
