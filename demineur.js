@@ -18,49 +18,31 @@ var millisecond = 0;
 
 function init()
 {
+    var SelectLvl = document.getElementById("Option");
+    var labelBombes = document.getElementById("nbBombes");
+
+    if( sessionStorage.getItem('clé') != null)
+    {
+        nbBombesjeu = sessionStorage.getItem('clé');
+        labelBombes.innerHTML = nbBombesjeu;
+        SelectLvl.selectedIndex = (nbBombesjeu == 20 ? 0 : nbBombesjeu == 35 ? 1 : nbBombesjeu == 45 ? 2 : 0);
+        setGameParameters(SelectLvl.selectedIndex);
+    }
+
     if ( matriceJeu != [] ? matriceJeu = creerMatrice() : null);
 
     placeBombe();
     CreateTab();
 
-    var SelectLvl = document.getElementById("Option");
-    var labelBombes = document.getElementById("nbBombes");
-
-    try{
-        if( sessionStorage.getItem('clé') != null)
-        {
-            nbBombesjeu = sessionStorage.getItem('clé');
-            labelBombes.innerHTML = nbBombesjeu;
-        }
-    }catch{}
-
-    sessionStorage.setItem('clé',nbBombesjeu);
-
     SelectLvl.onchange = function(){
-
         reset();
         tabCellClicked = [];
         tabCellAdjacente = [];
-
-        if (SelectLvl.value == "Facile"){
-            nbBombesjeu = 20;
-            lignesMatrice = 10;
-            tailleCell = 5;
-        }
-        else if(SelectLvl.value == "Moyen"){
-            nbBombesjeu = 35;
-            lignesMatrice = 15;
-            tailleCell = 3.25;
-        }
-        else{
-            nbBombesjeu = 45;
-            lignesMatrice = 20;
-            tailleCell = 2.4;
-        }
-
-        labelBombes.innerHTML = nbBombesjeu;
         matriceJeu = [];
+
+        setGameParameters(SelectLvl.selectedIndex);
         sessionStorage.setItem('clé',nbBombesjeu);
+        
         init();
     };
 
@@ -495,6 +477,25 @@ function ColorTextBombs(number)
     if(number == 6 ?  color = "gold" : null );
 
     return color;
+}
+
+function setGameParameters(selectedIndex)
+{
+    if (selectedIndex == 0){
+        nbBombesjeu = 20;
+        lignesMatrice = 10;
+        tailleCell = 5;
+    }
+    else if(selectedIndex == 1){
+        nbBombesjeu = 35;
+        lignesMatrice = 15;
+        tailleCell = 3.25;
+    }
+    else{
+        nbBombesjeu = 45;
+        lignesMatrice = 20;
+        tailleCell = 2.4;
+    }
 }
 
 /**
