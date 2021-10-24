@@ -166,7 +166,7 @@ function CreateTab()
                 } 
                 else{
                     pause();
-                    heighScore();
+                    highScore();
                     EndGame();
                 }           
             }
@@ -303,7 +303,7 @@ function CreateTab()
                         localStorage.setItem(10,minute + ":" + "0" + second);
                     }
 
-                    heighScore();
+                    highScore();
                     OverlayEnd("You Win");
                 }
             }
@@ -533,7 +533,7 @@ function setGameParameters(selectedIndex)
         nbBombesjeu = 20;
         lignesMatrice = 10;
         tailleCell = 5;
-        CellToDiscover = 2;
+        CellToDiscover = 80;
     }
     else if(selectedIndex == 1){
         nbBombesjeu = 35;
@@ -724,7 +724,7 @@ function consoleText(words, id, colors) {
     }, 400)
 }
 
-function heighScore()
+function highScore()
 {
     var tabScore = [];
 
