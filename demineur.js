@@ -295,7 +295,14 @@ function CreateTab()
                 if(CellToDiscover == 0)
                 {
                     pause();
-                    localStorage.setItem(11,minute + "," + second);
+                    if (second / 10 > 1)
+                    {
+                        localStorage.setItem(10,minute + ":" + second);
+                    }
+                    else{
+                        localStorage.setItem(10,minute + ":" + "0" + second);
+                    }
+
                     heighScore();
                     OverlayEnd("You Win");
                 }
@@ -619,19 +626,13 @@ function OverlayEnd(text)
     const closeModalButtons = document.querySelectorAll('[data-close-button]')
     const overlay = document.getElementById('overlay')
 
-    // var parent = document.getElementById('console-container');
-    // try{
-    //     parent.removeChild(document.getElementById('textEnd'));
-    //     parent.removeChild(document.getElementById('console'));
-    // }catch{}
-    // var enfant1 = document.createElement('span');
-    // enfant1.id = "textEnd";
-    // var enfant2 = document.createElement('div');
-    // enfant2.id = 'console';
-    // enfant2.className = "console-underscore";
-
-    // enfant1.appendChild(enfant2);
-    // parent.appendChild(enfant1);
+    var parent = document.getElementById('console-container');
+    try{
+        parent.removeChild(document.getElementById('textEnd'));
+    }catch{}
+    var enfant1 = document.createElement('span');
+    enfant1.id = "textEnd";
+    parent.insertAdjacentElement('afterbegin', enfant1)
 
     consoleText([text], 'textEnd',(text == "You Loose" ? ['Red'] : ['lightblue'] ) );
 
@@ -682,6 +683,7 @@ function consoleText(words, id, colors) {
     var waiting = false;
     var target = document.getElementById(id)
     target.setAttribute('style', 'color:' + colors[0])
+
     window.setInterval(function() {
   
       if (letterCount === 0 && waiting === false) {
@@ -726,14 +728,16 @@ function heighScore()
 {
     var tabScore = [];
 
-    for (var i = 11 ; i > 0 ; i--)
+    for (var i = 10 ; i > -1 ; i--)
     {
-        tabScore.push(localStorage.getItem(i));
+        if ( localStorage.getItem( i ) != null )
+        {
+            tabScore.push(localStorage.getItem( i ));
+        }
     }
 
-
     localStorage.clear();
-    tabScore.sort();
+    tabScore.sort((a,b) => a.localeCompare(b));
 
     var parent = document.getElementById('HighScore');
     try{
@@ -751,21 +755,16 @@ function heighScore()
         li.id = 'child';
         let mark = document.createElement("mark");
 
-        if ( typeof(tabScore[j]) === 'object' || tabScore[j] == "null" )
+        try
         {
-            var texte = [tabScore[j]];
-            mark.appendChild( document.createTextNode( " Non jouée" ) );
-
-        }
-        else
-        {
-            var texte = tabScore[j].split(',');
-            mark.appendChild( document.createTextNode( texte[0] + " minute(s) et " + texte[1] + "seconde(s)" ) );
+            var texte = tabScore[j].split(':');
+            mark.appendChild( document.createTextNode( texte[0] + " minute(s) et " + texte[1] + " seconde(s)" ) );
+            localStorage.setItem(j,tabScore[j]);
+        }catch{
+            mark.appendChild( document.createTextNode( " Non jouée ou gagnée" ) );
         }
 
         li.appendChild(mark);
         parent.appendChild(li);
-
-        localStorage.setItem(j,tabScore[j]);
     }
 }
