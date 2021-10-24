@@ -159,8 +159,16 @@ function CreateTab()
 
             if(Macell.isBombe)
             {
-                if(firstShot ? antiLoose(Macell) : EndGame());
-                Macell.dom.click();
+                if( firstShot )
+                {
+                    antiLoose(Macell);
+                    Macell.dom.click();
+                } 
+                else{
+                    pause();
+                    heighScore();
+                    EndGame();
+                }           
             }
             else{
 
@@ -287,7 +295,8 @@ function CreateTab()
                 if(CellToDiscover == 0)
                 {
                     pause();
-                    heighScore(minute + "," + second);
+                    localStorage.setItem(11,minute + "," + second);
+                    heighScore();
                     OverlayEnd("You Win");
                 }
             }
@@ -467,7 +476,6 @@ function withdrawElement(tab,elementToWithdraw)
 
 function EndGame()
 {
-    pause();
     var delayInMilliseconds = 1000; //1 second
 
     for( let i = 0; i < lignesMatrice; i++ )
@@ -610,6 +618,21 @@ function OverlayEnd(text)
     const button = document.getElementById('buttonEnd')
     const closeModalButtons = document.querySelectorAll('[data-close-button]')
     const overlay = document.getElementById('overlay')
+
+    // var parent = document.getElementById('console-container');
+    // try{
+    //     parent.removeChild(document.getElementById('textEnd'));
+    //     parent.removeChild(document.getElementById('console'));
+    // }catch{}
+    // var enfant1 = document.createElement('span');
+    // enfant1.id = "textEnd";
+    // var enfant2 = document.createElement('div');
+    // enfant2.id = 'console';
+    // enfant2.className = "console-underscore";
+
+    // enfant1.appendChild(enfant2);
+    // parent.appendChild(enfant1);
+
     consoleText([text], 'textEnd',(text == "You Loose" ? ['Red'] : ['lightblue'] ) );
 
     button.addEventListener('click', () => {
@@ -643,7 +666,8 @@ function OverlayEnd(text)
         if (modal == null) return
             modal.classList.remove('active')
             overlay.classList.remove('active')
-            reset()
+            reset();
+            start();
             init();
         }
 }
@@ -656,7 +680,7 @@ function consoleText(words, id, colors) {
     var letterCount = 1;
     var x = 1;
     var waiting = false;
-    var target = document.getElementById(id);
+    var target = document.getElementById(id)
     target.setAttribute('style', 'color:' + colors[0])
     window.setInterval(function() {
   
@@ -698,9 +722,8 @@ function consoleText(words, id, colors) {
     }, 400)
 }
 
-function heighScore(timer)
+function heighScore()
 {
-    localStorage.setItem(11,timer);
     var tabScore = [];
 
     for (var i = 11 ; i > 0 ; i--)
@@ -708,30 +731,36 @@ function heighScore(timer)
         tabScore.push(localStorage.getItem(i));
     }
 
+
     localStorage.clear();
     tabScore.sort();
 
     var parent = document.getElementById('HighScore');
+    try{
+        let childs = document.querySelectorAll("li#child");
+        childs.forEach(child => {
+            parent.removeChild(child);
+        });
+
+    }catch{}
+
 
     for (var j = 0 ; j < 10;  j++ )
     {
         let li = document.createElement("li");
+        li.id = 'child';
         let mark = document.createElement("mark");
 
-        if ( tabScore[j] != null )
+        if ( typeof(tabScore[j]) === 'object' || tabScore[j] == "null" )
+        {
+            var texte = [tabScore[j]];
+            mark.appendChild( document.createTextNode( " Non jouée" ) );
+
+        }
+        else
         {
             var texte = tabScore[j].split(',');
-        }
-        else{
-            var texte = [tabScore[j]];
-        }
-
-        if ( texte != 'null')
-        {
             mark.appendChild( document.createTextNode( texte[0] + " minute(s) et " + texte[1] + "seconde(s)" ) );
-        }
-        else{
-            mark.appendChild( document.createTextNode( " Non jouée" ) );
         }
 
         li.appendChild(mark);

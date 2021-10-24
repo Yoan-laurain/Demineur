@@ -39,15 +39,14 @@ session_start();
                 <div class="modal-Content"> 
                     <div class="leaderboard">
                         <div class="head">
-                        <div class='console-container'>
-                            <span id='textEnd'></span>
-                            <div class='console-underscore' id='console'>&#95;
+                        <div class='console-container' id ='console-container''>
+                            <span id = 'textEnd'></span>
+                            <div class = 'console-underscore' id='console'>&#95;
                             </div>
                         </div>
                         </div>
                         <div class="body">
-                            <ol id ='HighScore'>
-                               
+                            <ol id ='HighScore'>       
                             </ol>
                         </div>
                     </div>
