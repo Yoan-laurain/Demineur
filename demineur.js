@@ -287,6 +287,7 @@ function CreateTab()
                 if(CellToDiscover == 0)
                 {
                     pause();
+                    heighScore(minute + "," + second);
                     OverlayEnd("You Win");
                 }
             }
@@ -517,7 +518,7 @@ function setGameParameters(selectedIndex)
         nbBombesjeu = 20;
         lignesMatrice = 10;
         tailleCell = 5;
-        CellToDiscover = 80;
+        CellToDiscover = 2;
     }
     else if(selectedIndex == 1){
         nbBombesjeu = 35;
@@ -695,4 +696,21 @@ function consoleText(words, id, colors) {
         visible = true;
       }
     }, 400)
+}
+
+function heighScore(timer)
+{
+    tabScore = [];
+    for (var i = 11 ; i > 0 ; i--)
+    {
+        tabScore.push(localStorage.getItem(i));
+    }
+
+    localStorage.clear();
+    tabScore.sort();
+
+    for (var j = 0 ; j < 10 < j++; )
+    {
+        localStorage.setItem(j,tabScore[j]);
+    }
 }
