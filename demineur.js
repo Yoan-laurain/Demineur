@@ -610,7 +610,7 @@ function OverlayEnd(text)
     const button = document.getElementById('buttonEnd')
     const closeModalButtons = document.querySelectorAll('[data-close-button]')
     const overlay = document.getElementById('overlay')
-    consoleText([text], 'textEnd',(text == "You Loose" ? ['Red'] : ['blue'] ) );
+    consoleText([text], 'textEnd',(text == "You Loose" ? ['Red'] : ['lightblue'] ) );
 
     button.addEventListener('click', () => {
         const modal = document.querySelector(button.dataset.modalTarget)
@@ -700,7 +700,9 @@ function consoleText(words, id, colors) {
 
 function heighScore(timer)
 {
-    tabScore = [];
+    localStorage.setItem(11,timer);
+    var tabScore = [];
+
     for (var i = 11 ; i > 0 ; i--)
     {
         tabScore.push(localStorage.getItem(i));
@@ -709,8 +711,32 @@ function heighScore(timer)
     localStorage.clear();
     tabScore.sort();
 
-    for (var j = 0 ; j < 10 < j++; )
+    var parent = document.getElementById('HighScore');
+
+    for (var j = 0 ; j < 10;  j++ )
     {
+        let li = document.createElement("li");
+        let mark = document.createElement("mark");
+
+        if ( tabScore[j] != null )
+        {
+            var texte = tabScore[j].split(',');
+        }
+        else{
+            var texte = [tabScore[j]];
+        }
+
+        if ( texte != 'null')
+        {
+            mark.appendChild( document.createTextNode( texte[0] + " minute(s) et " + texte[1] + "seconde(s)" ) );
+        }
+        else{
+            mark.appendChild( document.createTextNode( " Non jouée" ) );
+        }
+
+        li.appendChild(mark);
+        parent.appendChild(li);
+
         localStorage.setItem(j,tabScore[j]);
     }
 }
