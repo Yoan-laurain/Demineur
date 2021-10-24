@@ -11,7 +11,6 @@ var minute = 0;
 var second = 0;
 var millisecond = 0;
 var firstShot = true;
-
 var CellToDiscover;
 
 /**
@@ -460,6 +459,11 @@ function withdrawElement(tab,elementToWithdraw)
     })
 }
 
+/**
+ * Display the bombe and call the End overlay
+ * @return { void }
+ */
+
 function EndGame()
 {
     pause();
@@ -481,6 +485,12 @@ function EndGame()
     OverlayEnd("You Loose");
 }
 
+
+/**
+ * Choose the color of the number in the case according to the number of bombs around him
+ * @param { int } number
+ * @return { string } color
+ */
 function ColorTextBombs(number)
 {
     let color;
@@ -495,6 +505,12 @@ function ColorTextBombs(number)
     return color;
 }
 
+
+/**
+ * Set the différents parameters of the game according to the lvl selected
+ * @param { int } selectedIndex
+ * @return { void }
+ */
 function setGameParameters(selectedIndex)
 {
     if (selectedIndex == 0){
@@ -517,6 +533,11 @@ function setGameParameters(selectedIndex)
     }
 }
 
+/**
+ * Move the bombe if the player click on it on the first move
+ * @param { tuile } aCell
+ * @return { void } 
+ */
 function antiLoose(aCell)
 {
     var success = false;
@@ -532,7 +553,6 @@ function antiLoose(aCell)
         }
     }
 }
-
 
 /**
  * PART FOR THE TIMER
