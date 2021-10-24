@@ -91,7 +91,7 @@ function CreateTab()
             tuileDom.style.width = tuile.x + "vw";
             tuileDom.style.height = tuile.y + "vh";
             tuileDom.id = "Cell";
-            tuileDom.name = tuile.i.toString() + tuile.j.toString();
+            tuileDom.name = tuile.i.toString() + "-" + tuile.j.toString();
 
             tuile.dom = tuileDom;
 
@@ -110,7 +110,9 @@ function CreateTab()
         element.addEventListener('contextmenu', function(ev) {
             ev.preventDefault();
 
-            var MaCell = foundCell(element.name);
+            var coordonate = element.name.split('-');
+            var MaCell = matriceJeu[coordonate[0]][coordonate[1]];
+
             var labelBombes = document.getElementById("nbBombes");
 
             var couleur ="";
@@ -153,7 +155,8 @@ function CreateTab()
 
         element.onclick = function ()
         {
-            Macell = foundCell(element.name);
+            var coordonate = element.name.split('-');
+            var Macell = matriceJeu[ coordonate[0] ][ coordonate[1] ];
 
             if(Macell.isBombe)
             {
@@ -355,27 +358,6 @@ function placeBombe()
             count++;
         }
     }
-}
-
-/**
- * Return the cell in the matrix with the same name than the param
- * @param { String } name
- * @return { Tuile } || @return { bool }
- */
-
-function foundCell(name)
-{
-    for( let i = 0; i < lignesMatrice; i++ )
-    {
-        for( let j = 0; j < lignesMatrice; j++ )
-        {
-            if( name == matriceJeu[i][j].id )
-            {
-                return matriceJeu[i][j];
-            }
-        }
-    }
-    return false;
 }
 
 /**
