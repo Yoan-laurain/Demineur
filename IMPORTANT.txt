@@ -1,0 +1,5 @@
+Important le jeu n'incluant pas d'AJAX il est nécessaire de refresh la page après chaque victoire/défaite.
+De plus de ce fait seul le mode facile est pleinement fonctionnel, le mode moyen peut de temps en temps fonctionner.
+Egalement le mode difficile ne marchera pas du fait du trop grand nombre d'appels de la fonction clic.
+
+Cordialement Laurain Yoan.
